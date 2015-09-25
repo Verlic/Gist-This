@@ -1,6 +1,6 @@
 # Gist-This
 
-A [Gist](https://gist.github.com/)+[Slack](https://slack.com/) integration using [WebTask.io](https://webtask.io/) as a back-end nexus between the two services.
+A [Gist](https://gist.github.com/)+[Slack](https://slack.com/) integration using [WebTask.io](https://webtask.io/) as a communication nexus between the two services.
 
 ## How does it work?
 
