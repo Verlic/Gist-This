@@ -39,11 +39,11 @@ Once webtask is installed and initialized, follow these steps:
 	wt create gist-this.js --secret SLACK_TOKEN={command-token} --secret SLACK_URL={webhook-url}
 	````
 	
-1. This command will show you the URL that you can use to invoke the webtask. Copy this URL and update your Slash command in Slack to send a POST message to the webtask.
+1. Once the operation is completed, you will see the webtask URL that you can use to invoke within Slack. Copy this URL and update your Slash command in to send a POST message to the webtask.
 
-#### Create gists in Slack
+#### Creating gists in Slack
 
-You are good to go. Go to a Slack channel, and use your slash command by typing the filename and the content of gist. For example:
+You are good to go! Go to a Slack channel, and use your slash command by typing the filename and the content of gist. For example:
 
 ````
 /gist-this helloworld.js function hello() { console.log ('Hello World'); }
@@ -53,8 +53,14 @@ This will create an anonymous Gist with the name **helloworld.js** and the code 
 
 > **Note:** You can use this to create documents (e.g. a markdown file, my-doc.md) and review them online.
 
+### Next Steps
 
+Instead of anonymous gists, it would be nice that each user in Slack could create their own gists and save them in their GitHub accounts.
 
+### Further reading
+
+- [Another example using Webtasks](https://auth0.com/blog/2015/07/28/if-this-then-node-dot-js-extending-ifttt-with-webtask-dot-io/)
+- Check the slides of the Auth0 event: [Rethinking backend with webtasks](https://auth0.com/events/fec15-webtask#!)
 
 
 
