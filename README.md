@@ -36,7 +36,7 @@ Once webtask is installed and initialized, follow these steps:
 1. Our module requires 2 _secrets_: the Slack Token from the slash command to validate incoming requests, and the WebHook URL to post the generated gist URL. Create the webtask using the following command:
 
 	````
-	wt create gist-this.js --secret SLACK_TOKEN={command-token} --secret SLACK_URL={webhook-url}
+	wt create https://raw.githubusercontent.com/Verlic/Gist-This/master/gist-this.js --secret SLACK_TOKEN={command-token} --secret SLACK_URL={webhook-url}
 	````
 	
 1. Once the operation is completed, you will see the webtask URL that you can use to invoke within Slack. Copy this URL and update your Slash command in to send a POST message to the webtask.
