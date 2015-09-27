@@ -25,9 +25,19 @@ function checkDatabaseInitialized(context, callback) {
 	}
 }
 
+
+/** WEBTASK **/
 module.exports = function (context, callback) {
 	var slackId = context.data.user_id,
-		gistToken = context.data.text;	
+		gistToken = context.data.text,
+		incomingToken = context.data.token,
+		slackToken = context.data.SLACK_TOKEN;	
+	
+	// First we validate that the request comes from our Slack Command	
+	if (incomingToken !== slackToken) {
+		callback('Invalid token. Unauthorized.');
+		return;
+	}
 	
 	// Validate that incoming data is valid	
 	if (!slackId || !gistToken) {
