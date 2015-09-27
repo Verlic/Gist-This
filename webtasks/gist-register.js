@@ -1,11 +1,12 @@
 var request = require('request'),
 	mongoose = require('mongoose'),
-	userSchema = new mongoose.Schema({ slackId: String, gistToken: String });
+	userSchema = new mongoose.Schema({ slackId: String, gistToken: String }),
+	GistUser;
 
 function checkDatabaseInitialized(context, callback) {
 	if (!this.dbInitialized) {
-		if (!this.GistUser) {
-			this.GistUser = mongoose.model('GistUser', userSchema);
+		if (!GistUser) {
+			GistUser = mongoose.model('GistUser', userSchema);
 		}
 
 		mongoose.connect(context.data.GIST_CONNECTION);
@@ -48,13 +49,15 @@ module.exports = function (context, callback) {
 	checkDatabaseInitialized(context, callback);
 	var data = { slackId: slackId, gistToken: gistToken };
 
-	this.GistUser.findOne({ slackId: slackId }, function (err, user) {
+	GistUser.findOne({ slackId: slackId }, function (err, user) {
 		if (err) {
 			callback('Unable to retrieve gist user from the database');
 			return;
 		}
-
+		
 		if (user) {
+			console.log("User found. Updating gist token...");
+			
 			// Gist user found. Update its token
 			user.gistToken = gistToken;
 			user.slackId = slackId;
@@ -68,7 +71,8 @@ module.exports = function (context, callback) {
 				callback(null, 'Gist token updated! Token: ' + gistToken);
 			});
 		} else {
-			var newUser = new this.GistUser(data);
+			console.log("User not found. Creating a new one...");
+			var newUser = new GistUser(data);
 			newUser.save(function (err, data) {
 				if (err) {
 					callback(err);

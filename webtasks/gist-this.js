@@ -1,6 +1,7 @@
 var request = require('request'),
 	mongoose = require('mongoose'),
 	GitHubApi = require('github@0.2.4'),
+	GistUser,
 	github = new GitHubApi({
 		// required
 		version: "3.0.0",
@@ -87,7 +88,7 @@ function createUserGist(gistUser, gist, callback) {
 }
 
 function findGistUser(slackId, cb) {
-	this.GistUser.findOne({ slackId: slackId }, function (err, user) {
+	GistUser.findOne({ slackId: slackId }, function (err, user) {
 		if (err) {
 			cb('Unable to retrieve gist user from the database');
 			return;
@@ -99,8 +100,8 @@ function findGistUser(slackId, cb) {
 
 function checkDatabaseInitialization(context, callback){
 		if (!this.dbInitialized) {
-		if (!this.GistUser) {
-			this.GistUser = mongoose.model('GistUser', userSchema);
+		if (!GistUser) {
+			GistUser = mongoose.model('GistUser', userSchema);
 		}
 
 		mongoose.connect(context.data.GIST_CONNECTION);
