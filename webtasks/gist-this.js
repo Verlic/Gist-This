@@ -51,6 +51,7 @@ function createAnonymousGist(gist, callback) {
 		files: gist.file
 	};
 
+	github.authenticate(null); // Removes any previous authentication attempt.
 	github.gists.create(payload, function (error, body) {
 		if (error) {
 			callback('Error while creating gist:' + JSON.stringify(error));
