@@ -77,13 +77,14 @@ function createUserGist(gistUser, gist, callback) {
 
 	github.gists.create(payload, function (err, body) {
 		if (err) {
-			callback('Error while creating gist:' + JSON.stringify(err));
+			// Cannot create a gist for this user. Invalid token? Proceed with an anonymous gist.
+			createAnonymousGist(gist, callback);
 		} else if (!body) {
 			callback('Unable to parse body from Gist');
+		} else {
+			console.log('Gist created: ' + JSON.stringify(body));
+			notifySlack(body.html_url, gist, callback);
 		}
-
-		console.log('Gist created: ' + JSON.stringify(body));
-		notifySlack(body.html_url, gist, callback);
 	});
 }
 
@@ -98,8 +99,8 @@ function findGistUser(slackId, cb) {
 	});
 }
 
-function checkDatabaseInitialization(context, callback){
-		if (!this.dbInitialized) {
+function checkDatabaseInitialization(context, callback) {
+	if (!this.dbInitialized) {
 		if (!GistUser) {
 			GistUser = mongoose.model('GistUser', userSchema);
 		}
